@@ -1,0 +1,72 @@
+<% @time = Time.now %>
+<div class="time">
+ <h1><%= @time.strftime("%H:%M") %></h1>
+</div>
+
+<ul id="tabs">
+    <li><a href="#" name="tab1">Employee Que</a></li>
+    <li><a href="#" name="tab2">Verified Events</a></li>
+    <li><a href="#" name="tab3">Call Logs</a></li>    
+</ul>
+<div id="content">
+  <div id="tab1">
+      <% if @events.exists? %>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Priority</th>
+            <th>Event</th>
+            <th>Deadline</th>
+            <th>Event Description</th>
+            <th>Event Comment
+          </tr>
+
+        <% @events.each do |event| %> 
+          <tr>
+            <td><%= event.initials %></td>
+            <td><%= event.priroty %></td>
+          	<td><%= event.event_name %></td>
+            <td class="deadline"><%= event.deadline.strftime("%m-%d %H:%M") %></td>
+          	<td class="description"><%= event.event_description %></td>
+            <td class="comment"><% if event.comment.present? %>
+                 <%= event.comment %> <%= link_to 'Edit', edit_event_path(event) %>
+                <% else %>
+                  <%= link_to 'Comments Go Here', edit_event_path(event) %>
+                <% end %>
+            </td>
+          	<td><%= form_for event do |f| %>
+                   <%= f.check_box(:complete) %>
+                   <%= f.submit 'Complete?' %>
+                  <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </table>
+      <% else %>
+        <p>There are no events to be completed!</p>
+      <% end %>
+  </div>
+  <div id="tab2">
+    <table>
+        <tr>
+          <th>Name</th>
+          <th>Event Description</th>
+          <th>Event Comments</th>
+        </tr>
+      <% @verified.each do |check| %>
+        <tr>
+          <td><%= check.name %></td>
+          <td class="description"><%= check.event_description %></td>
+          <td class="comment"><%= check.comment %></td>
+        </tr>
+      <% end %>
+      </table>
+  </div>
+  <div id="tab3">
+  </div>
+</div>
+
+<table>
+  <h3><%= link_to 'Logout', sessions_destroy_path %></h3>
+</table>
+

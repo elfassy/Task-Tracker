@@ -1,0 +1,16 @@
+	<tr>
+	  <td/>
+	  <td class="paginate"><%= paginate @verified %></td>
+	</tr>
+	<tr>
+		<th>Name</th>
+		<th>Event Description</th>
+		<th>Event Comments</th>
+	</tr>
+	<% @verified.each do |check| %>
+	<tr>
+		<td><%= check.name %></td>
+		<td class="description"><%= check.event_description %></td>
+		<td class="comment"><%= check.comment %></td>
+	</tr>
+	<% end %>

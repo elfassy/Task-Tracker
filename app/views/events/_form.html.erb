@@ -1,0 +1,43 @@
+<%= form_for(@event) do |f| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% @event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <%= form_for(:event, :url => {:action => :update, :id => @event.id}) do |e| %>
+    <table>
+	<tr>
+	  <th>Initails</th>
+	  <td><%= e.select(:initials, (@users)) %></td>
+	  <th>Priroty</th>
+	  <td><%= e.select(:priroty, (1..10)) %></td>
+	</tr>
+	<tr>
+	  <th>Name</th>
+	  <td><%= e.select(:name, (@name)) %></td>
+	  <th>Event</th>
+	  <td><%= e.text_field(:event_name, :readonly => true) %></td>
+	</tr>
+	<tr>
+	  <th>Event Description</th>
+	  <td><%= e.text_area(:event_description, :size => '80x10', :placeholder => "Event details for Employee",:readonly => true) %></td>
+	</tr>
+	<tr>
+	  <th>Comments</th>
+	  <td><%= e.text_area(:comment, :size => '80x10', :placeholder => "Keep comments short and concise.....") %></td>
+	</tr>
+    </table>
+
+	
+  <div class="actions">
+    <%= e.submit %>
+  </div>
+  <% end %>
+<% end %>

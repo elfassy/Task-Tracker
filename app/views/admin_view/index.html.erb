@@ -1,0 +1,116 @@
+<% @time = Time.now %>
+<div class="time">
+ <h1><%= @time.strftime("%H:%M") %></h1>
+</div>
+
+    <ul id="tabs">
+        <li><a href="#" name="tab1">Admin Que</a></li>
+        <li><a href="#" name="tab2">Employee Que</a></li>
+        <li><a href="#" name="tab3">Verified Events</a></li>
+        <li><a href="#" name="tab4">Call Logs</a></li>    
+    </ul>
+    <div id="content">
+      <div id="tab1">
+
+      <% if @archived.exists? %>
+        <table>
+          <tr>
+            <th>Initials</th>
+              <td/><td/>
+            <th>Event</th>
+            <td/><td/><td/>
+            <th>Event Description</th>
+            <th>Event Comment</th>
+            <th/>
+            <th>Date/Time Completed</th>
+            <!-- <th>Verified?</th> -->
+
+          </tr>
+
+          <% @archived.each do |archive| %>
+            <tr>
+              <td><%= archive.initials %></td>
+              <td/><td/>
+              <td><%= archive.event_name %></td>
+              <td/><td/><td/>
+              <td><%= archive.event_description %></td>
+              <td><%= archive.comment %></td>
+              <td/>
+              <td><%= archive.created_at.strftime("%m-%d %H:%M") %></td>
+              <td>
+                <%= form_for archive do |e| %>
+                  <%= e.check_box(:admin_verify) %>
+
+                  <%= e.submit 'Verify' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          <table>
+          </table>
+
+      <% else %>
+        <p>All employee completed tickets have been verified and archived!</p>
+      <% end %>
+      </div>
+      <div id="tab2">
+
+      <% if @events.exists? %>
+        <table>
+          <tr>
+            <th>Initials</th>
+            <th>Priority</th>
+            <th>Event</th>
+            <th/><th/>
+            <th>Deadline</th>
+            <th/><th/>
+            <th>Event Description</th>
+            <th>Event Comment
+          </tr>
+
+        <% @events.each do |event| %> 
+          <tr>
+            <td><%= event.initials %></td>
+            <td><%= event.priroty %></td>
+            <td><%= event.event_name %></td>
+            <td/><td/>
+            <td><%= event.deadline.strftime("%m-%d %H:%M") %></td>
+            <td/><td/>
+            <td><%= event.event_description %></td>
+            <td><%= event.comment %></td>
+            <td>
+            </td>
+              <td><%#= link_to 'Show', event %></td>
+              <td><%= link_to 'Edit', edit_admin_view_path(event) %></td>
+              <td><%= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete %></td>
+          </tr>
+        <% end %>
+        </table>
+      <% else %>
+        <p>There are no events to be completed!</p>
+      <% end %>
+      <br/>
+        <%= link_to 'New Event', new_admin_view_path %>
+      </div> 
+      <div id="tab3">
+          <%= form_tag admin_view_index_path, :method => 'get', :id => 'verified_search' do %>
+              <%= text_field_tag :search, params[:search] %>
+              <%= submit_tag "Search", :name => :nil %>
+            <table class="results">
+                    <%= render'search' %>
+            </table>
+              
+          <% end %>
+      </div>
+      <div id="tab4">
+
+        <% f = File.open("calls.csv") %>
+          <%= f.each do |date, num, time, ext, name, state| %>
+            <%= "#{date}, #{num}, #{time}, #{ext}, #{name}, #{state}" %><br/>
+          <% end %>
+        <% f.close %>
+
+      </div>
+    </div>
+
+    <h3><%= link_to 'Logout', sessions_destroy_path %></h3>

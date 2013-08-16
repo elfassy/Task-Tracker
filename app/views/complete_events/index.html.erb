@@ -1,0 +1,103 @@
+<% @time = Time.now %>
+<div class="time">
+ <h1><%= @time.strftime("%H:%M") %></h1>
+</div>
+
+
+<div class="event_wrapper">
+<h1>Employee Que</h1>
+<div class="underscore"></div>
+
+<% if @events.exists? %>
+  <table>
+    <tr>
+      <th>Initials</th>
+      <th>Priority</th>
+      <th>Event</th>
+      <th/><th/>
+      <th>Deadline</th>
+      <th/><th/>
+      <th>Event Description</th>
+      <th>Event Comment
+    </tr>
+
+  <% @events.each do |event| %> 
+    <tr>
+      <td><%= event.initials %></td>
+      <td><%= event.priroty %></td>
+    	<td><%= event.event_name %></td>
+      <td/><td/>
+      <td><%= event.deadline %></td>
+      <td/><td/>
+    	<td><%= event.event_description %></td>
+      <td><%= event.comment %></td>
+    	<td></td>
+        <td><%= link_to 'Show', event %></td>
+        <td><%= link_to 'Edit', edit_event_path(event) %></td>
+        <td><%#= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+<% else %>
+  <p>There are no events to be completed!</p>
+<% end %>
+<br/>
+<div class="right">
+  <%= link_to 'New Event', new_event_path %>
+</div>
+
+<br/><br/>
+<div class="underscore"></div>
+<h1>Admin Verify Que</h1>
+<div class="underscore"></div>
+
+<% if @archived.exists? %>
+  <table>
+    <tr>
+      <th>Initials</th>
+        <td/><td/>
+      <th>Event</th>
+      <td/><td/><td/>
+      <th>Event Description</th>
+      <th>Event Comment</th>
+      <th/>
+      <th>Date/Time Completed</th>
+      <!-- <th>Verified?</th> -->
+
+    </tr>
+
+    <% @archived.each do |archive| %>
+      <tr>
+        <td><%= archive.initials %></td>
+        <td/><td/>
+        <td><%= archive.event_name %></td>
+        <td/><td/><td/>
+        <td><%= archive.event_description %></td>
+        <td><%= archive.comment %></td>
+        <td/>
+        <td><%= archive.created_at %></td>
+        <td>
+          <%#= form_for(:complete_event, {:action => :update, :id => @event.id}) do |e| %>
+            <%#= e.check_box(:admin_verify) %>
+
+            <%#= e.submit %>
+          <%# end %>
+        </td>
+
+        <td/>
+        <td><%= link_to 'Edit', edit_complete_event_path(archive) %></td>
+      </tr>
+    <% end %>
+
+<% else %>
+  <p>All employee completed tickets have been verified and archived!</p>
+<% end %>
+<br/>
+
+<div class="right">
+  <table>
+  <h3><%= link_to 'Logout', sessions_destroy_path %></h3>
+  </table>
+</div>
+
+</div>

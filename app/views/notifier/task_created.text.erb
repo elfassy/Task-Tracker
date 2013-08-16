@@ -1,0 +1,13 @@
+Hi <%= @name %>
+
+You have a new task in your que. Please go look at the task.
+
+Brief Description:
+
+Event Name: <%= @event.event_name %>
+
+Event Description: <%= @event.event_description %>
+
+Priority: <%= @event.priroty %>
+
+Deadline: <%= @event.deadline.strftime("%m-%d %H:%M") %>

@@ -1,0 +1,8 @@
+<h1>EditCompleted Event</h1>
+
+<%= "Have you verified that #{@event.event_name} has been completed #{@event.name}" %>
+
+<%= render 'verifyform' %>
+
+<%= link_to 'Show Comments', @event %> |
+<%= link_to 'Back to Admin', admin_view_index_path %>

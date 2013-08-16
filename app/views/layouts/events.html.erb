@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TaskTrack</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  	<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script>
+	$(document).ready(function() {
+	    $("#content div").hide(); // Initially hide all content
+	    $("#tabs li:first").attr("id","current"); // Activate first tab
+	    $("#content div:first").fadeIn(); // Show first tab content
+	    
+	    $('#tabs a').click(function(e) {
+	        e.preventDefault();
+	        if ($(this).closest("li").attr("id") == "current"){ //detection for current tab
+	         return       
+	        }
+	        else{             
+	        $("#content div").hide(); //Hide all content
+	        $("#tabs li").attr("id",""); //Reset id's
+	        $(this).parent().attr("id","current"); // Activate this
+	        $('#' + $(this).attr('name')).fadeIn(); // Show content for current tab
+	        }
+	    });
+
+	});
+	
+	</script>
+  <meta http-equiv="refresh" content="240">
+</head>
+<body class="events_homepage">
+
+<%= yield %>
+
+</body>
+</html>

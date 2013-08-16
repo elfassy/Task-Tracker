@@ -1,0 +1,2 @@
+module AdminVerifiedHelper
+end
